@@ -9,23 +9,30 @@ static void main_window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_frame(window_layer);
 
-  s_left_layer = text_layer_create(GRect(0, 20, bounds.size.w, 28));
+  s_left_layer = text_layer_create(GRect(0, PBL_IF_RECT_ELSE(20, 36), bounds.size.w, 28));
   text_layer_set_text(s_left_layer, "Left");
   text_layer_set_font(s_left_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   text_layer_set_text_alignment(s_left_layer, GTextAlignmentLeft);
   layer_add_child(window_layer, text_layer_get_layer(s_left_layer));
+#ifdef PBL_ROUND
+  const uint8_t inset = 5;
+  text_layer_enable_screen_text_flow_and_paging(s_left_layer, inset);
+#endif
 
-  s_center_layer = text_layer_create(GRect(0, 60, bounds.size.w, 28));
+  s_center_layer = text_layer_create(GRect(0, PBL_IF_RECT_ELSE(60, 76), bounds.size.w, 28));
   text_layer_set_text(s_center_layer, "Center");
   text_layer_set_font(s_center_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   text_layer_set_text_alignment(s_center_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(s_center_layer));
 
-  s_right_layer = text_layer_create(GRect(0, 100, bounds.size.w, 28));
+  s_right_layer = text_layer_create(GRect(0, PBL_IF_RECT_ELSE(100, 116), bounds.size.w, 28));
   text_layer_set_text(s_right_layer, "Right");
   text_layer_set_font(s_right_layer, fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD));
   text_layer_set_text_alignment(s_right_layer, GTextAlignmentRight);
   layer_add_child(window_layer, text_layer_get_layer(s_right_layer));
+#ifdef PBL_ROUND
+  text_layer_enable_screen_text_flow_and_paging(s_right_layer, inset);
+#endif
 }
 
 static void main_window_unload(Window *window) {
